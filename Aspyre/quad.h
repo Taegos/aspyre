@@ -4,19 +4,11 @@
 #include "glm/glm.hpp"
 #include <GL/glew.h>
 
-class Vertex {
- public:
- Vertex(const glm::vec3 & pos) :
-    pos { pos } {}
- private:
-    glm::vec3 pos;
-};
-
-class Mesh {
+class Quad {
 
  public:
-    Mesh(Vertex*, unsigned int);
-    ~Mesh();
+	Quad(glm::vec2, float, float);
+    ~Quad();
     void draw();
  private:
     enum {

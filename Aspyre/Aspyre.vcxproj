@@ -76,11 +76,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Benjamin\Source\Repos\Aspyre\Aspyre\external\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Aspyre\external\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>C:\Users\Benjamin\Source\Repos\Aspyre\Aspyre\external\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Aspyre\external\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -128,11 +129,13 @@
   <ItemGroup>
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="keyboard_emitter.cpp" />
+    <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="mesh.cpp" />
     <ClCompile Include="mouse_emitter.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="Resources.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -140,11 +143,16 @@
     <ClInclude Include="exceptions.h" />
     <ClInclude Include="input_data.h" />
     <ClInclude Include="keyboard_emitter.h" />
-    <ClInclude Include="mesh.h" />
     <ClInclude Include="mouse_emitter.h" />
     <ClInclude Include="renderer.h" />
+    <ClInclude Include="resources.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\shader.fs" />
+    <None Include="res\shaders\shader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

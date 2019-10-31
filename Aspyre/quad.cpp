@@ -1,13 +1,11 @@
-#include "mesh.h"
+#include "quad.h"
 
-Mesh::Mesh(Vertex* vertices, unsigned int count)
+Quad::Quad(glm::vec2 top_left, float width, float height)
 {
-    draw_count = count;
-
-    glGenVertexArrays(1, &vertex_arr_obj);
+   glGenVertexArrays(1, &vertex_arr_obj);
     glBindVertexArray(vertex_arr_obj);
 
-    glGenBuffers(NUM_BUFFERS, &vertex_arr_obj);
+    glGenBuffers(1, &vertex_arr_obj);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_arr_buffers[POSITION_VB]);
 
     glBufferData(GL_ARRAY_BUFFER, count * sizeof(vertices[0]), vertices, GL_STATIC_DRAW);
@@ -20,12 +18,12 @@ Mesh::Mesh(Vertex* vertices, unsigned int count)
 
 }
 
-Mesh::~Mesh()
+Quad::~Quad()
 {
     glDeleteVertexArrays(1, &vertex_arr_obj);
 }
 
-void Mesh::draw()
+void Quad::draw()
 {
     glBindVertexArray(vertex_arr_obj);
 
