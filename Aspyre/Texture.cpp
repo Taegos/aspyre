@@ -4,27 +4,22 @@
 #include "lodepng.h"
 
 using namespace std;
+int Texture::id = 0;
 
-Texture::Texture(const std::string& file_name)
+#include <iostream>
+Texture::Texture(unsigned int width, unsigned int height, vector<unsigned char> image)
 {
-	unsigned int width;
-	unsigned int height;
-	vector<unsigned char> image;
-	unsigned int error = lodepng::decode(image, width, height, file_name.c_str());
-	if (error) {
-		throw IOException(lodepng_error_text(error));
-	}
-
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.data());
+	Texture::id++;
 }
 
 Texture::~Texture()
@@ -32,11 +27,11 @@ Texture::~Texture()
 	glDeleteTextures(1, &texture);
 }
 
-void Texture::bind(unsigned int unit)
+void Texture::bind()
 {
-	if (unit < 0 || unit > 31) {
-		throw OpenGLException("Texture unit have to be in range 0 - 31");
-	}
-	glActiveTexture(GL_TEXTURE0 + unit);
+//	if (unit < 0 || unit > 31) {
+	//	throw OpenGLException("Texture unit have to be in range 0 - 31");
+//	}
+	glActiveTexture(GL_TEXTURE0 + Texture::id);
 	glBindTexture(GL_TEXTURE_2D, texture);
 }

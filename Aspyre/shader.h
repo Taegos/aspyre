@@ -3,19 +3,20 @@
 
 #include <string>
 #include <GL/glew.h>
+#include "glm/mat4x4.hpp"
 
 class Shader {
  public:
     Shader(const std::string &, const std::string &);
     ~Shader();
     void use();
+	void set_mat4(const std::string&, const glm::mat4&);
+	GLuint program;
  private:
     GLuint create_shader(const std::string &, GLenum);
     void validate_shader(GLint, GLenum);
     void validate_program(GLint, GLenum);
-    static const unsigned int NUM_SHADERS = 2;
-    GLuint program;
-    GLuint shaders[NUM_SHADERS];
+  
 };
 
 #endif // SHADER_H

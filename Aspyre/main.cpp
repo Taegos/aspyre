@@ -5,5 +5,5 @@
 
 int main()
 {
-	Engine::run(1000, 1000);
+	Engine::run(1000, 500);
 }

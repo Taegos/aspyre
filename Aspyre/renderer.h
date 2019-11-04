@@ -12,17 +12,19 @@ struct RenderJob {
 	unsigned int height{ 0 };
 };
 
+const int MAX_DRAW_CALLS = 200;
+
 class Renderer {
 public:
 	Renderer();
 	void flush();
-	void add_job(RenderJob&&);
-	int load_texture(const std::string&);
+	void push();
 private:
 	GLuint VBO;
 	GLuint VAO;
 	GLuint EBO;
-
-	std::vector<Texture> textures;
-	std::vector<RenderJob> jobs;
+	
+	int call = 0;
+	glm::vec2 vertices[MAX_DRAW_CALLS * 8];
+	int indices[MAX_DRAW_CALLS * 6];
 };

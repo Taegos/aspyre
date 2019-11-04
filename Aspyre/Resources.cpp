@@ -16,17 +16,17 @@ Texture Resources::load_texture(const std::string& name)
 	unsigned int width;
 	unsigned int height;
 	vector<unsigned char> image;
-	unsigned int error = lodepng::decode(image, width, height, name.c_str());
+	unsigned int error = lodepng::decode(image, width, height, path + texture_path + name.c_str());
 	if (error) {
 		throw IOException(lodepng_error_text(error));
 	}
-	return Texture(name);
+	return Texture(width, height, image);
 }
 
 Shader Resources::load_shader(const std::string& name)
 {
-	std::string vert_file = read_file(shader_path + name + ".vs");
-	std::string frag_file = read_file(shader_path + name + ".fs");
+	std::string vert_file = read_file(shader_path + name + ".vert");
+	std::string frag_file = read_file(shader_path + name + ".frag");
 	return Shader(vert_file, frag_file);
 }
 

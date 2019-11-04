@@ -6,33 +6,31 @@
 
 using namespace std;
 
-
 Shader::Shader(const std::string & vertex_file, const std::string & frag_file)
 {
-    program = glCreateProgram();
-    shaders[0] = create_shader(vertex_file, GL_VERTEX_SHADER);
-    shaders[1] = create_shader(frag_file, GL_FRAGMENT_SHADER);
-
-    for (unsigned int i = 0; i < NUM_SHADERS; i++) {
-        glAttachShader(program, shaders[i]);
-    }
-
+    GLuint vertex_shader = create_shader(vertex_file, GL_VERTEX_SHADER);
+    GLuint frag_shader = create_shader(frag_file, GL_FRAGMENT_SHADER);
+	program = glCreateProgram();
+	glAttachShader(program, vertex_shader);
+	glAttachShader(program, frag_shader);
     glLinkProgram(program);
     validate_program(program, GL_LINK_STATUS);
-    validate_program(program, GL_VALIDATE_STATUS);
+	glDeleteShader(vertex_shader);
+	glDeleteShader(frag_shader);
 }
 
 Shader::~Shader()
 {
-    for (unsigned int i = 0; i < NUM_SHADERS; i++) {
-        glDetachShader(program, shaders[i]);
-        glDeleteShader(shaders[i]);
-    }
     glDeleteProgram(program);
 }
 
 void Shader::use() {
     glUseProgram(program);
+}
+
+void Shader::set_mat4(const std::string & name, const glm::mat4 &mat)
+{
+	glUniformMatrix4fv(glGetUniformLocation(program, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
 GLuint Shader::create_shader(const std::string & shader_file,
